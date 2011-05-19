@@ -1,0 +1,164 @@
+SYNOPSIS:
+
+Error Handling:
+
+    - Implements CSEH using Kazlib. Provides a set of standard
+      exceptions
+    - Provides macros for generating various levels of warning messages
+    - These messages can be handled either by a default handler or a
+      user defined one
+
+String Manipulation:
+
+    - Provides safe alternatives to dangerous string functions. These
+      functions dynamically reallocate more memory
+    - Provides simpler, safer alternaties to the strn* functions
+    - Provides some new string handling functions
+
+Time Functions:
+
+    - Provides a safe version of strftime(3) that dynamically allocates
+      enough memory
+    - Provides simpler alternatives to time functions
+
+Logfile Functions:
+
+    - Provides a logfile mechanism which includes timestamping each
+      entry
+
+Macros and Defines:
+
+    - Provides a bool type
+    - Provides a NULL identifier
+    - Provides some useful macro shortcuts
+
+Error Handler
+-------------
+
+1. Before using the error handler, set cb_error_handler to the desired
+   error handling function. This function must have the following
+   prototype:
+
+      void *my_handler (const char *message, int error_level)
+
+      message               : error message
+      error_level           : level of error
+
+      Only message will be user-defined. error_level is set by the error
+      generating macros
+
+   The following handlers are provided for use:
+
+       print_to_stderr : send all errors to stderr and calls exit(3)
+           when die() is called
+
+       print_to_logfile : as print_to_stderr, but errors are also
+           sent to the logfile named by logfilename and include
+           timestamp and error level
+
+2. Provides the following macros. Each generates and handles an error
+   message of the given level. If msg is NULL, the system error message is
+   used instead (a default message is used in the case where no system
+   error has occured). Calls to debug() are complied away if DEBUG is not
+   defined
+
+      void diagnostic (const char *msg)
+      void warn       (const char *msg)
+      void error      (const char *msg)
+      void die        (const char *msg)
+      void debug      (const char *msg)
+
+      msg : error message
+
+3. The function pointed to by my_handler will be called with the error
+   message and error level. User defined error handlers may proceed to
+   perform any actions to handle the error
+
+Memory Management
+-----------------
+
+1. Provides the following macros with the following parameters. These
+   macros perform the required calculations to allocate the correct
+   number of bytes. xfree frees the stale pointer AND sets it to NULL
+
+   void *xcalloc  (<type>, int num) 
+   void *xmalloc  (<type>, int num)
+   void *xrealloc (<type>, void *p, int num)
+   void  xfree    (void *stale) 
+
+   <type> : C type identifier
+   num    : number of <type> to allocate. NOT number of bytes
+   p      : pointer to reallocate
+   stale  : pointer to free
+
+2. These macros throw an exception upon failure
+
+String Functions
+----------------
+
+1. Provides the following functions with the following parameters. The
+   xstrn* macros perform the required calculations to write the
+   correct number of bytes to dst. The xstr* macros automatically
+   attempt to allocate enough space to succeed
+
+   char *xstrcpy   (char *dst, const char *src)
+   char *xstrcat   (char *dst, const char *src)
+   char *xstrncpy  (char *dst, const char *src, size_t size)
+   char *xstrncat  (char *dst, const char *src, size_t size)
+   char *xsprintf  (char *dst, const char *format, ...)
+   char *xnsprintf (char *dst, size_t size, const char *format, ...)
+
+   dst    : destination string
+   src    : source string
+   size   : size of dst
+   format : a sprintf(3) format string
+
+Time Functions
+--------------
+
+1. Provides the following functions with the following parameters:
+
+      xstrftime    : return a strftime(3) formatted string using format
+      getlocaltime : return a struct tm* set to local time
+      getgmttime   : return a struct tm* set to gmt time
+
+      const char *xstrftime (const char *format)
+      struct tm *getlocaltime ();
+      struct tm *getgmttime ();
+
+Logfile Functions
+-----------------
+
+1. Provides the following functions with the following parameters:
+
+   Logfiles:
+
+      logfile_t *open_logfile (const char *filename, const char *format)
+      bool      log_entry     (logfile_t *logfile, const char *entry)
+      bool      close_logfile (logfile_t *logfile)
+
+      filename : name of log file
+      format   : timestamp format in strftime(3) format
+      entry    : logfile entry
+
+   A call to open_logfile() will open filename for appending and set
+   the logfile timestamp format to format. A value of NULL will keep
+   timestamps from being used.
+
+   Call log_entry() with the entry to be logged and close_logfile()
+   to end logging
+
+Miscellaneous
+-------------
+
+1. Provides the following #define's:
+
+   BEGIN_C_DECLS, END_C_DECLS : set off C declarations for use in C++
+   bool type, true, false : Boolean type
+   NULL                            
+
+2. Provides the following functions:
+
+   chomp : remove a single trailing newline from string
+
+   char *chomp (char *string)
