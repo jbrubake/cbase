@@ -50,7 +50,7 @@ xmalloc_ (size_t num)
     void *new = malloc (num);
 
     if (!new)
-        THROW (EXC_ALLOC);
+        THROW (X_ALLOC);
 
     return new;
 }
@@ -77,7 +77,7 @@ xrealloc_ (void *p, size_t num)
   new = realloc (p, num);
 
   if (!new)
-      THROW (EXC_ALLOC);
+      THROW (X_ALLOC);
 
   return new;
 }
@@ -99,7 +99,7 @@ xcalloc_ (size_t num, size_t size)
   void *new = calloc (num, size);
 
   if (!new)
-      THROW (EXC_ALLOC);
+      THROW (X_ALLOC);
 
   return new;
 }

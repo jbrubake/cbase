@@ -2,3 +2,17 @@
 
 * Reorganized project structure and basically started from scratch
 
+2011-05-24 Jeremy Brubaker <jbru362@gmail.com>
+
+* kazlib_wrapper.h: Deleted. Moved functionality to except.h
+
+* except.h: Created a sensible TRY/CATCH framework for kazlib
+
+* Makefile: Now properly cleans coredumps on Windows
+
+Wrote macros so you can use kazlib's exception handling in a sensible
+way. This required some loss of flexibility as you can no longer catch
+specific exceptions, but you can handle specific exceptions in the CATCH
+block. An unhandled exception can then be rethrown and caught by the
+next enclosing TRY/CATCH block.
+

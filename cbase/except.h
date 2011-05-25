@@ -152,4 +152,80 @@ void except_free(void *);
         except_pop();                                           \
     }
 
+
+/*
+ * The following code was added to except.h by Jeremy Brubaker
+ * (jbru362@gmail.com). It adds TRY, CATCH and END_CATCH macros to allow
+ * user code to use kazlib's exception handling in a more intuitive way.
+ * It results in a loss of some flexibility, but for my purposes that
+ * was OK. See the full documentation for cbase for an overview on how
+ * to use the basic exception handling with my changes.
+ */
+
+/* TODO: Write simple documentation on how to use this system */
+
+/*************************************
+ * Standard error groups and exeptions
+ *************************************/
+
+#define X_ALLOC     1
+#define X_FOPEN     2
+#define X_FCLOSE    3
+#define X_FWRITE    4
+#define X_BAD_INPUT 5
+
+#define X_USERDEF   6 /* All user defined exceptions start here */
+
+#define DUMMY_CODE  1 /* THROW() doesn't specify an actual exception code */
+
+/**************************************
+ * Macros to setup the exception system
+ **************************************/
+
+/*
+ * This is what I'm going for:
+ *
+ * TRY
+ * {
+ *     <code that might fail>
+ * }
+ * CATCH
+ * {
+ *     case X_*:
+ *         break;
+ *     case X_*:
+ *         break;
+ *     default:
+ *         break;
+ * }
+ * END_CATCH;
+ */
+
+#define TRY                                                      \
+    {                                                            \
+        static const except_id_t catch_spec[] = {                \
+            { XCEPT_GROUP_ANY, XCEPT_CODE_ANY } };               \
+        except_t *exc;                                           \
+        struct except_stacknode except_sn;                       \
+        struct except_catch except_ch;                           \
+        except_setup_try(&except_sn, &except_ch, catch_spec, 1); \
+        if (setjmp(except_ch.except_jmp))                        \
+            *(&exc) = &except_ch.except_obj;                     \
+        else                                                     \
+            *(&exc) = 0;                                         \
+        if (exc == 0)
+
+#define CATCH                          \
+        else                           \
+        {                              \
+            switch (except_group(exc))
+
+#define END_CATCH                                                       \
+        }                                                               \
+        except_free(except_ch.except_obj.except_dyndata); except_pop(); \
+    };
+
+#define THROW(type)   except_throw   ((type), DUMMY_CODE, "")
+#define RETHROW()     except_rethrow ((exc))
+
 #endif

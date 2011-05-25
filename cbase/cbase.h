@@ -43,7 +43,7 @@
 #include <stdio.h>
 
 /* TODO: Merge this into cbase.h" */
-#include "kazlib_wrapper.h"
+#include "except.h"
 
 /*-----------------------------------------
  *

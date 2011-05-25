@@ -72,7 +72,7 @@ INSTALL_DATA    := $(INSTALL) -m 644
 EXE      := .exe
 BASENAME := test
 PROGNAME := $(BASENAME)$(EXE)
-COREFILE := __COREFILE__
+COREFILE := $(BASENAME)$(EXE).stackdump
 
 # Variables to set distro tarball name
 VERSION := 1.0.0
