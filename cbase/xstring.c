@@ -40,8 +40,8 @@
 | for src to fit
 | 
 | Parameters:
-|     const char *dst : string to copy to
-|     char * src      : string to copy
+|     char *dst       : string to copy to
+|     const char *src : string to copy
 | Returns:
 |     char * : pointer to dst
 \*-------------------------------------------------*/
@@ -56,8 +56,8 @@ xstrcpy (char *dst, const char *src)
 | for src to fit
 | 
 | Parameters:
-|     const char *dst : string to cat to
-|     char * src      : string to cat
+|     char *dst       : string to cat to
+|     const char *src : string to cat
 | Returns:
 |     char * : pointer to dst
 \*-------------------------------------------------*/

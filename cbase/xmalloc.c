@@ -30,7 +30,6 @@
 | authorization.                                                           |
 \*------------------------------------------------------------------------*/
 #include <stdlib.h>
-#include <errno.h>
 
 #include "cbase.h"
 

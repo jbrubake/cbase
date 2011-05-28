@@ -16,3 +16,14 @@ specific exceptions, but you can handle specific exceptions in the CATCH
 block. An unhandled exception can then be rethrown and caught by the
 next enclosing TRY/CATCH block.
 
+2011-05-27 Jeremy Brubaker <jbru362@gmail.com>
+
+* Makefile, pkgfiles/Makefile: Now respects environment settings for common
+variables
+
+* cbase/xmalloc.h: Cleaned up #include's
+
+* cbase/xstring.h: Fixed incorrect function parameters
+
+Build system now respects environment settings for CC and LD and
+only appends to CPPFLAGS, CFLAGS and LDFLAGS.

@@ -60,10 +60,6 @@ OBJFILES := $(patsubst %.c,%.o, \
 		$(filter %.y,$(SRCFILES)))
 
 # Tools
-SHELL           := /bin/sh
-CC              := gcc
-LD              := gcc
-MAKE            := make
 INSTALL         := install
 INSTALL_PROGRAM := $(INSTALL)
 INSTALL_DATA    := $(INSTALL) -m 644
@@ -79,9 +75,9 @@ VERSION := __VERSION__
 DISTFILE := $(BASENAME)-$(VERSION).tar.gz
 
 # Flags
-CPPFLAGS   := 
+CPPFLAGS   := $(CPPFLAGS)
 ALL_CFLAGS := $(CFLAGS) -g
-LDFLAGS    := 
+LDFLAGS    := $(LDFLAGS)
 LIBS       :=
 
 COMPILE := $(CC) -c $(INCLUDES) $(CPPFLAGS) $(ALL_CFLAGS)
