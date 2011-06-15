@@ -1,5 +1,5 @@
 /*------------------------------------------------------------------------*\
-| xlogfile.c
+| logfile.c
 |
 | This file is part of libcbase
 |
@@ -34,15 +34,16 @@
 #include <time.h>
 
 #include "cbase.h"
+#include "bstrlib.h"
 
 logfile_t *
-open_logfile (const char *filename, const char *format)
+open_logfile (bstring filename, bstring format)
 {
     return NULL;
 }
 
 bool
-log_entry (logfile_t *logfile, const char *entry)
+log_entry (logfile_t *logfile, bstring entry)
 {
     return true;
 }

@@ -24,3 +24,13 @@ next enclosing TRY/CATCH block.
 
 Instead of rolling my own string routines cbase will use the Better String
 Library.
+
+2011-06-15 Jeremy Brubaker <jbru362@gmail.com>
+
+* module.mk: Removed old files and added new ones
+
+* cbase.h error.c, logfile.c, util.c, xtime.c: Changed all references to
+cstrings with bstrings
+
+Previous commit added the bstring library, but I didn't adjust anything to
+actually use it

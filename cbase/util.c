@@ -33,9 +33,10 @@
 #include <time.h>
 
 #include "cbase.h"
+#include "bstrlib.h"
 
-char *
-chomp (char *string)
+bstring
+chomp (bstring string)
 {
-    return "\0";
+    return NULL;
 }

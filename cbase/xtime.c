@@ -33,11 +33,12 @@
 #include <time.h>
 
 #include "cbase.h"
+#include "bstrlib.h"
 
-const char *
-xstrftime (const char *format)
+bstring
+xstrftime (bstring format)
 {
-    return "\0";
+    return NULL;
 }
 
 struct tm *

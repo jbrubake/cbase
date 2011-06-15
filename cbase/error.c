@@ -35,32 +35,28 @@
 #include <errno.h>
 
 #include "cbase.h"
+#include "bstrlib.h"
 #include "private.h"
 
 void
-generate_error (const char *message, int error_level)
+generate_error (bstring message, int error_level)
 {
-    /*  Use static buffers so we don't run the risk of
-     *  ENOMEM (this is an error handler after all */
-    static char buf[ STATIC_BUFFER_SIZE ];
+    /* TODO: Is there a way to avoid possible ENOMEM here? */
+    bstring buf = NULL;
 
     /* 
      * Build the error message
      */
 
-    if (message)
-    {
-        xstrncpy (buf, message, strlen (message));
-    }
-    else
+    if (!message)
     {
         if (errno)
         {
-            xstrncpy (buf, strerror (errno), strlen (strerror (errno)));
+            buf = bfromcstr (strerror (errno));
         }
         else
         {
-            xstrcpy (buf, "NO SYSTEM ERROR");
+            buf = bfromcstr ("NO SYSTEM ERROR");
         }
     }
 
@@ -68,16 +64,16 @@ generate_error (const char *message, int error_level)
 }
 
 void
-print_to_stderr (const char *message, int error_level)
+print_to_stderr (bstring message, int error_level)
 {
     /* TODO: Add code to print DEBUG, DIAGNOSTIC, etc */
-    fprintf (stderr, "%s\n", message);
+    fprintf (stderr, "%s\n", (char *)message->data);
     if (error_level > ERROR_FATAL)
         exit (error_level);
 }
 
 void
-print_to_logfile (logfile_t *logfile, const char *message, int error_level)
+print_to_logfile (logfile_t *logfile, bstring message, int error_level)
 {
     log_entry (logfile, message);
     print_to_stderr (message, error_level);

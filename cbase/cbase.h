@@ -44,6 +44,7 @@
 
 /* TODO: Merge this into cbase.h" */
 #include "except.h"
+#include "bstrlib.h"
 
 /*-----------------------------------------
  *
@@ -91,11 +92,11 @@ BEGIN_C_DECLS
  */
 typedef struct {
     FILE *fd;
-    char *format;
+    bstring format; /* strftime(3) format string */
 } logfile_t;
 
-logfile_t  *open_logfile  (const char *filename, const char *format);
-bool        log_entry     (logfile_t *logfile, const char *entry);
+logfile_t  *open_logfile  (bstring filename, bstring format);
+bool        log_entry     (logfile_t *logfile, bstring entry);
 bool        close_logfile (logfile_t *logfile);
 
 /*-----------------------------------------
@@ -106,12 +107,12 @@ bool        close_logfile (logfile_t *logfile);
 
 /* Pointer to error handling function */
 /* XXX: How can I avoid the pointless typedef? */
-typedef void (*error_handler_t) (const char *message, int error_level);
+typedef void (*error_handler_t) (bstring message, int error_level);
 error_handler_t error_handler;
 
 /* Generic error handlers provided for use */
-void print_to_stderr  (const char *, int);
-void print_to_logfile (logfile_t *, const char *, int);
+void print_to_stderr  (bstring, int);
+void print_to_logfile (logfile_t *, bstring, int);
 
 /* error_handler() will be called with these as its
  * second parameter. Exception: If die() is called,
@@ -131,7 +132,7 @@ void print_to_logfile (logfile_t *, const char *, int);
 #define error(msg)      generate_error (msg, ERROR_NONFATAL)
 #define die(msg, errno) generate_error (msg, errno)
 
-void generate_error (const char *message, int error_level);
+void generate_error (bstring message, int error_level);
 
 /*-----------------------------------------
  *
@@ -161,7 +162,7 @@ void *xrealloc_ (void *p, size_t num);
  *
  *----------------------------------------*/
 
-const char *xstrftime    (const char *format);
+bstring     xstrftime    (bstring format);
 struct tm  *getlocaltime ();
 struct tm  *getgmttime   ();
 
@@ -171,7 +172,7 @@ struct tm  *getgmttime   ();
  *
  *----------------------------------------*/
 
-char *chomp (char *string);
+bstring chomp (bstring string);
 
 END_C_DECLS
 
