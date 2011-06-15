@@ -27,3 +27,7 @@ variables
 
 Build system now respects environment settings for CC and LD and
 only appends to CPPFLAGS, CFLAGS and LDFLAGS.
+
+2011-06-15 Jeremy Brubaker <jbru362@gmail.com>
+
+* README: Renamed to README.md and converted to Markdown format
