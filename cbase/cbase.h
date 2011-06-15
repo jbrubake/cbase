@@ -157,19 +157,6 @@ void *xrealloc_ (void *p, size_t num);
 
 /*-----------------------------------------
  *
- * String manipulation functions and macros
- *
- *----------------------------------------*/
-
-char *xstrcpy   (char *dst, const char *src);
-char *xstrcat   (char *dst, const char *src);
-char *xstrncpy  (char *dst, const char *src, size_t size);
-char *xstrncat  (char *dst, const char *src, size_t size);
-int   xsprintf  (char *str, const char *format, ...);
-int   xnsprintf (char *str, size_t size, const char *format, ...);
-
-/*-----------------------------------------
- *
  * Time manipulation functions and macros
  *
  *----------------------------------------*/

@@ -16,3 +16,11 @@ specific exceptions, but you can handle specific exceptions in the CATCH
 block. An unhandled exception can then be rethrown and caught by the
 next enclosing TRY/CATCH block.
 
+2011-06-14 Jeremy Brubaker <jbru362@gmail.com>
+
+* bstrlib.[ch]: Added
+
+* xstring.h: Deleted
+
+Instead of rolling my own string routines cbase will use the Better String
+Library.
