@@ -4,11 +4,11 @@
 
 2011-05-24 Jeremy Brubaker <jbru362@gmail.com>
 
-* kazlib_wrapper.h: Deleted. Moved functionality to except.h
+* cbase/kazlib_wrapper.h: Deleted. Moved functionality to except.h
 
-* except.h: Created a sensible TRY/CATCH framework for kazlib
+* cbase/except.h: Created a sensible TRY/CATCH framework for kazlib
 
-* Makefile: Now properly cleans coredumps on Windows
+* cbase/Makefile: Now properly cleans coredumps on Windows
 
 Wrote macros so you can use kazlib's exception handling in a sensible
 way. This required some loss of flexibility as you can no longer catch
@@ -18,7 +18,7 @@ next enclosing TRY/CATCH block.
 
 2011-05-27 Jeremy Brubaker <jbru362@gmail.com>
 
-* Makefile, pkgfiles/Makefile: Now respects environment settings for common
+* cbase/Makefile, pkgfiles/Makefile: Now respects environment settings for common
 variables
 
 * cbase/xmalloc.h: Cleaned up #include's
@@ -31,3 +31,8 @@ only appends to CPPFLAGS, CFLAGS and LDFLAGS.
 2011-06-15 Jeremy Brubaker <jbru362@gmail.com>
 
 * README: Renamed to README.md and converted to Markdown format
+
+2011-06-15 Jeremy Brubaker <jbru362@gmail.com>
+
+* doc/cbase.1: Created a basic manpage. Just a shell right now.
+
