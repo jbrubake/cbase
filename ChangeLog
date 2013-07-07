@@ -1,3 +1,7 @@
+2013-07-07 Jeremy Brubaker <jbru362@gmail.com>
+
+* docs/cbaserc.5: Created basic manpage for cbaserc
+
 2011-05-19 Jeremy Brubaker <jbru362@gmail.com>
 
 * Reorganized project structure and basically started from scratch
